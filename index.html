@@ -146,7 +146,7 @@
 <div class="topbar">
   <div class="logo">📺 Mi IPTV <span id="ch-badge"></span></div>
   <select id="cat-select">
-    <option value="">Todos los canales</option>
+    <option value="" disabled selected>Selecciona una categoría…</option>
     <option value="news">📰 Noticias</option>
     <option value="sports">⚽ Deportes</option>
     <option value="entertainment">🎬 Entretenimiento</option>
@@ -200,8 +200,7 @@
 const PROXY = 'https://api.allorigins.win/raw?url=';
 const BASE = 'https://iptv-org.github.io/iptv/';
 const URLS = {
-  '':            BASE + 'index.m3u',
-  'news':        BASE + 'categories/news.m3u',
+   'news':        BASE + 'categories/news.m3u',
   'sports':      BASE + 'categories/sports.m3u',
   'entertainment': BASE + 'categories/entertainment.m3u',
   'movies':      BASE + 'categories/movies.m3u',
