@@ -197,7 +197,11 @@
 </div>
 
 <script>
-const PROXY = 'https://api.allorigins.win/raw?url=';
+const PROXIES = [
+  url => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
+  url => `https://api.codetabs.com/v1/proxy?quest=${url}`,
+  url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+];
 const BASE = 'https://iptv-org.github.io/iptv/';
 const URLS = {
   'news':        BASE + 'categories/news.m3u',
@@ -323,9 +327,11 @@ async function loadList() {
   document.getElementById('channel-list').innerHTML = '<div class="msg">Descargando lista…</div>';
   document.getElementById('list-count').textContent = '';
   try {
-    const res = await fetch(PROXY + encodeURIComponent(url));
-    if (!res.ok) throw new Error();
-    const text = await res.text();
+        let text = null;
+    for (const p of PROXIES) {
+      try { const r = await fetch(p(url),{signal:AbortSignal.timeout(8000)}); if(r.ok){const t=await r.text();if(t.includes('#EXTINF')){text=t;break;}}} catch{}
+    }
+    if (!text) throw new Error();
     allChannels = parseM3U(text);
     filter();
   } catch {
