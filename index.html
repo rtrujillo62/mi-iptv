@@ -410,7 +410,7 @@ async function loadList() {
     }
     if (!text) throw new Error();
     allChannels = parseM3U(text);
-    if (isCategoryMode) buildCountryFilter(allChannels);
+    buildCountryFilter(allChannels);
     filter();
   } catch {
     document.getElementById('channel-list').innerHTML =
